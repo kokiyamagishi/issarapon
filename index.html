@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issarapon School Hiragana Map ひらがな表</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .section {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .section-title {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .dakuon .section-title {
+            background-color: #e24a4a;
+        }
+
+        .handakuon .section-title {
+            background-color: #4ae24a;
+        }
+
+        .yoon .section-title {
+            background-color: #e2c84a;
+        }
+
+        .hiragana-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .yoon-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .hiragana-button {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+            border: none;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .hiragana-button:hover {
+            background-color: #f0f8ff;
+            transform: scale(1.05);
+        }
+
+        .hiragana-button:active {
+            background-color: #e6e6fa;
+            transform: scale(0.95);
+        }
+
+        .romaji {
+            font-size: 12px;
+            color: #666;
+            display: block;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ひらがな Hiragana Map</h1>
+    
+    <div class="section">
+        <h2 class="section-title">Basic Hiragana (清音)</h2>
+        <div class="hiragana-grid" id="basicGrid"></div>
+    </div>
+
+    <div class="section dakuon">
+        <h2 class="section-title">Dakuon - Voiced Sounds (濁音)</h2>
+        <div class="hiragana-grid" id="dakuonGrid"></div>
+    </div>
+
+    <div class="section handakuon">
+        <h2 class="section-title">Handakuon - Semi-voiced Sounds (半濁音)</h2>
+        <div class="hiragana-grid" id="handakuonGrid"></div>
+    </div>
+
+    <div class="section yoon">
+        <h2 class="section-title">Yōon - Combination Sounds (拗音)</h2>
+        <div class="hiragana-grid yoon-grid" id="yoonGrid"></div>
+    </div>
+
+    <script>
+        const basicHiragana = [
+            { hiragana: 'あ', romaji: 'a' },
+    { hiragana: 'い', romaji: 'i' },
+    { hiragana: 'う', romaji: 'u' },
+    { hiragana: 'え', romaji: 'e' },
+    { hiragana: 'お', romaji: 'o' },
+    { hiragana: 'か', romaji: 'ka' },
+    { hiragana: 'き', romaji: 'ki' },
+    { hiragana: 'く', romaji: 'ku' },
+    { hiragana: 'け', romaji: 'ke' },
+    { hiragana: 'こ', romaji: 'ko' },
+    { hiragana: 'さ', romaji: 'sa' },
+    { hiragana: 'し', romaji: 'shi' },
+    { hiragana: 'す', romaji: 'su' },
+    { hiragana: 'せ', romaji: 'se' },
+    { hiragana: 'そ', romaji: 'so' },
+    { hiragana: 'た', romaji: 'ta' },
+    { hiragana: 'ち', romaji: 'chi' },
+    { hiragana: 'つ', romaji: 'tsu' },
+    { hiragana: 'て', romaji: 'te' },
+    { hiragana: 'と', romaji: 'to' },
+    { hiragana: 'な', romaji: 'na' },
+    { hiragana: 'に', romaji: 'ni' },
+    { hiragana: 'ぬ', romaji: 'nu' },
+    { hiragana: 'ね', romaji: 'ne' },
+    { hiragana: 'の', romaji: 'no' },
+    { hiragana: 'は', romaji: 'ha' },
+    { hiragana: 'ひ', romaji: 'hi' },
+    { hiragana: 'ふ', romaji: 'fu' },
+    { hiragana: 'へ', romaji: 'he' },
+    { hiragana: 'ほ', romaji: 'ho' },
+    { hiragana: 'ま', romaji: 'ma' },
+    { hiragana: 'み', romaji: 'mi' },
+    { hiragana: 'む', romaji: 'mu' },
+    { hiragana: 'め', romaji: 'me' },
+    { hiragana: 'も', romaji: 'mo' },
+    { hiragana: 'や', romaji: 'ya' },
+    { hiragana: 'ゆ', romaji: 'yu' },
+    { hiragana: 'よ', romaji: 'yo' },
+    { hiragana: 'ら', romaji: 'ra' },
+    { hiragana: 'り', romaji: 'ri' },
+    { hiragana: 'る', romaji: 'ru' },
+    { hiragana: 'れ', romaji: 're' },
+    { hiragana: 'ろ', romaji: 'ro' },
+    { hiragana: 'わ', romaji: 'wa' },
+    { hiragana: 'を', romaji: 'wo' },
+    { hiragana: 'ん', romaji: 'n' }
+];
+
+        const dakuonHiragana = [
+           { hiragana: 'が', romaji: 'ga' },
+    { hiragana: 'ぎ', romaji: 'gi' },
+    { hiragana: 'ぐ', romaji: 'gu' },
+    { hiragana: 'げ', romaji: 'ge' },
+    { hiragana: 'ご', romaji: 'go' },
+    { hiragana: 'ざ', romaji: 'za' },
+    { hiragana: 'じ', romaji: 'ji' },
+    { hiragana: 'ず', romaji: 'zu' },
+    { hiragana: 'ぜ', romaji: 'ze' },
+    { hiragana: 'ぞ', romaji: 'zo' },
+    { hiragana: 'だ', romaji: 'da' },
+    { hiragana: 'ぢ', romaji: 'ji' },
+    { hiragana: 'づ', romaji: 'zu' },
+    { hiragana: 'で', romaji: 'de' },
+    { hiragana: 'ど', romaji: 'do' },
+    { hiragana: 'ば', romaji: 'ba' },
+    { hiragana: 'び', romaji: 'bi' },
+    { hiragana: 'ぶ', romaji: 'bu' },
+    { hiragana: 'べ', romaji: 'be' },
+    { hiragana: 'ぼ', romaji: 'bo' }
+];
+
+        const handakuonHiragana = [
+            { hiragana: 'ぱ', romaji: 'pa' },
+            { hiragana: 'ぴ', romaji: 'pi' },
+            { hiragana: 'ぷ', romaji: 'pu' },
+            { hiragana: 'ぺ', romaji: 'pe' },
+            { hiragana: 'ぽ', romaji: 'po' }
+        ];
+
+        const yoonHiragana = [
+           { hiragana: 'きゃ', romaji: 'kya' },
+    { hiragana: 'きゅ', romaji: 'kyu' },
+    { hiragana: 'きょ', romaji: 'kyo' },
+    { hiragana: 'しゃ', romaji: 'sha' },
+    { hiragana: 'しゅ', romaji: 'shu' },
+    { hiragana: 'しょ', romaji: 'sho' },
+    { hiragana: 'ちゃ', romaji: 'cha' },
+    { hiragana: 'ちゅ', romaji: 'chu' },
+    { hiragana: 'ちょ', romaji: 'cho' },
+    { hiragana: 'にゃ', romaji: 'nya' },
+    { hiragana: 'にゅ', romaji: 'nyu' },
+    { hiragana: 'にょ', romaji: 'nyo' },
+    { hiragana: 'ひゃ', romaji: 'hya' },
+    { hiragana: 'ひゅ', romaji: 'hyu' },
+    { hiragana: 'ひょ', romaji: 'hyo' },
+    { hiragana: 'みゃ', romaji: 'mya' },
+    { hiragana: 'みゅ', romaji: 'myu' },
+    { hiragana: 'みょ', romaji: 'myo' },
+    { hiragana: 'りゃ', romaji: 'rya' },
+    { hiragana: 'りゅ', romaji: 'ryu' },
+    { hiragana: 'りょ', romaji: 'ryo' },
+    { hiragana: 'ぎゃ', romaji: 'gya' },
+    { hiragana: 'ぎゅ', romaji: 'gyu' },
+    { hiragana: 'ぎょ', romaji: 'gyo' },
+    { hiragana: 'じゃ', romaji: 'ja' },
+    { hiragana: 'じゅ', romaji: 'ju' },
+    { hiragana: 'じょ', romaji: 'jo' },
+    { hiragana: 'びゃ', romaji: 'bya' },
+    { hiragana: 'びゅ', romaji: 'byu' },
+    { hiragana: 'びょ', romaji: 'byo' },
+    { hiragana: 'ぴゃ', romaji: 'pya' },
+    { hiragana: 'ぴゅ', romaji: 'pyu' },
+    { hiragana: 'ぴょ', romaji: 'pyo' }
+];
+        function createButtons(characters, containerId) {
+            const container = document.getElementById(containerId);
+            characters.forEach(char => {
+                const button = document.createElement('button');
+                button.className = 'hiragana-button';
+                button.innerHTML = `${char.hiragana}<span class="romaji">${char.romaji}</span>`;
+                
+                button.addEventListener('click', () => {
+                    playSound(char.hiragana);
+                });
+                
+                container.appendChild(button);
+            });
+        }
+
+        function playSound(hiragana) {
+            const utterance = new SpeechSynthesisUtterance(hiragana);
+            utterance.lang = 'ja-JP'; // 日本語音声を使用
+            speechSynthesis.speak(utterance);
+        }
+
+        // Initialize all grids
+        createButtons(basicHiragana, 'basicGrid');
+        createButtons(dakuonHiragana, 'dakuonGrid');
+        createButtons(handakuonHiragana, 'handakuonGrid');
+        createButtons(yoonHiragana, 'yoonGrid');
+    </script>
+</body>
+</html>
